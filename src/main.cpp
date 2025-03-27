@@ -9,15 +9,19 @@
 #include <cpr/cpr.h>
 #include <nlohmann/json.hpp>
 #include <dpp/dpp.h>
-#include "BotToken.h"
- 
+#include "BotToken.h" 
+
 int main() {
-  dpp::cluster bot(BOT_TOKEN);
+  BotToken botToken;
+
+  std::string token = botToken.getToken();
+
+  dpp::cluster bot(token.c_str());
 
   bot.on_log(dpp::utility::cout_logger());
 
   bot.on_slashcommand([](const dpp::slashcommand_t& event) {
-    if (event.command.get_command_name() == "ping") {
+    if (event.command.get_command_name() == "lobby") {
       event.thinking();
       event.reply("Pong!");
     }
@@ -25,7 +29,7 @@ int main() {
 
   bot.on_ready([&bot](const dpp::ready_t& event) {
     if (dpp::run_once<struct register_bot_commands>()) {
-      bot.global_command_create(dpp::slashcommand("ping", "Ping pong!", bot.me.id));
+      bot.global_command_create(dpp::slashcommand("lobby", "Create an osu lobby!", bot.me.id));
     }
   });
 

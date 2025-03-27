@@ -5,7 +5,7 @@
 # is strictly prohibited without the explicit written permission
 # of the owner.
 
-add_executable(Boterino main.cpp)
+add_executable(Boterino main.cpp BotToken.cpp)
 
 # Link heads
 target_include_directories(Boterino PRIVATE ${cpr_SOURCE_DIR}/include

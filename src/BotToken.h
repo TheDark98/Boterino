@@ -1,1 +1,11 @@
-#define BOT_TOKEN ""
+#pragma once
+
+#include <string>
+
+class BotToken {
+private:
+    std::string botToken;
+public:
+    BotToken();
+    std::string getToken();
+};
