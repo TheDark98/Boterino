@@ -22,8 +22,9 @@ int main() {
 
   bot.on_slashcommand([](const dpp::slashcommand_t& event) {
     if (event.command.get_command_name() == "lobby") {
+      event.reply("Creating a lobby...");
       event.thinking();
-      event.reply("Pong!");
+      event.co_edit_original_response(dpp::message().set_content("Lobby created!"));
     }
   });
 
