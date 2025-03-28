@@ -4,29 +4,45 @@
 #include <iostream>
 
 BotToken::BotToken() {
-    std::string token;
-    std::ifstream checkFile("Boterino.token");
-    if(checkFile.is_open()) {
-        if (getline(checkFile, token)) {
-            checkFile.close();
-        }
-    }
-    checkFile.close();
-    if (!token.empty()) {
-        botToken = token;
+    std::string token = getToken();
+
+    if (token.c_str() == "") {
+        botToken = createToken();
     } else {
-        std::ofstream createFile("Boterino.token");
-        if (createFile.is_open()) {
-            std::cout << "Enter your bot token: ";
-            std::cin >> token;
-            botToken = token;
-            createFile << token;
-            createFile.close();
-            std::cout << "\nToken saved!\n";
-        }
+        botToken = token;
     }
 }
 
-std::string BotToken::getToken() {
+std::string BotToken::getToken() const {
+    std::string line;
+    std::ifstream file("Boterino.token");
+
+    if(file.is_open()) {
+        if (getline(file, line)) {
+            file.close();
+            return line;
+        }
+    }
+    file.close();
+    
+    return "";
+}
+
+std::string BotToken::createToken() const {
+    std::string token;
+    std::ofstream file("Boterino.token");
+
+        if (file.is_open()) {
+            std::cout << "Enter your bot token: ";
+            std::cin >> token;
+
+            file << token;
+            file.close();
+            std::cout << "\nToken saved!\n";
+        }
+    return token;
+}
+
+std::string BotToken::getToken() const {
     return botToken;
 }
